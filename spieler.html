@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>👕 Kleiderbörse – 1. SC 1911 Heiligenstadt</title>
+<meta name="theme-color" content="#1a56a0" />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="stylesheet" href="style.css?v=1.0" />
+</head>
+<body>
+
+<header>
+  <h1>👕 Kleiderbörse</h1>
+  <div class="header-right">
+    <img class="header-logo" src="https://sc1911heiligenstadt.github.io/logo.svg" alt="1. SC 1911 e.V. Heilbad Heiligenstadt" />
+  </div>
+</header>
+
+<main>
+
+  <!-- Ungültiger oder fehlender Link -->
+  <section id="sec-fehler" style="display:none;">
+    <div class="card">
+      <h2>Dieser Link führt nicht in die Börse</h2>
+      <p class="muted" id="fehler-text">Bitte den Link aus der Vereins-Nachricht noch einmal vollständig öffnen.</p>
+    </div>
+  </section>
+
+  <!-- Lädt gerade -->
+  <section id="sec-laedt">
+    <div class="card">
+      <p class="muted">Einen Moment – die Börse wird geladen.</p>
+    </div>
+  </section>
+
+  <!-- „Teil ist weg“-Link aus der E-Mail an die anbietende Familie -->
+  <section id="sec-weg" style="display:none;">
+    <div class="card">
+      <h2>Ist das Kleidungsstück weg?</h2>
+      <div id="weg-info" class="muted"></div>
+      <div class="btn-row" style="justify-content:flex-start; margin-top:14px;">
+        <button type="button" class="btn success" id="btn-weg-bestaetigen">Ja, es ist vergeben</button>
+        <a class="btn secondary" id="btn-weg-abbrechen" href="#">Nein, es ist noch da</a>
+      </div>
+      <p class="muted" id="weg-status" style="margin-top:12px;"></p>
+    </div>
+  </section>
+
+  <!-- Die eigentliche Börse -->
+  <section id="sec-boerse" style="display:none;">
+
+    <div class="card" id="hinweis-karte" style="display:none;">
+      <p id="hinweis-text" style="white-space:pre-line; margin:0;"></p>
+    </div>
+
+    <div class="card">
+      <p class="muted" style="margin-top:0;">
+        Hier geben Familien des Vereins Kleidung weiter, aus der ihr Kind
+        herausgewachsen ist. <strong>Alles ist kostenlos.</strong>
+      </p>
+      <div class="btn-row" style="justify-content:flex-start;">
+        <button type="button" class="btn" id="btn-zeige-boerse">Stöbern</button>
+        <button type="button" class="btn success" id="btn-zeige-formular">Etwas anbieten</button>
+      </div>
+    </div>
+
+    <!-- Stöbern -->
+    <div id="ansicht-boerse">
+      <div class="card">
+        <div class="card-header-row">
+          <h2>Was gerade da ist</h2>
+        </div>
+        <div class="filter-row">
+          <div class="form-field">
+            <label>Art</label>
+            <select id="filter-art"><option value="">Alle</option></select>
+          </div>
+          <div class="form-field">
+            <label>Größe</label>
+            <select id="filter-groesse"><option value="">Alle</option></select>
+          </div>
+        </div>
+        <div class="empty-state" id="boerse-empty" style="display:none;">
+          Zurzeit ist nichts in der Börse. Schau später noch einmal vorbei.
+        </div>
+        <div class="angebot-grid" id="boerse-grid"></div>
+      </div>
+    </div>
+
+    <!-- Etwas anbieten -->
+    <div id="ansicht-formular" style="display:none;">
+      <div class="card">
+        <h2>Ein Kleidungsstück anbieten</h2>
+        <p class="muted">
+          Dein Angebot wird erst vom Verein angesehen und danach in die Börse
+          gestellt. Das kann ein bis zwei Tage dauern.
+        </p>
+
+        <div class="form-field">
+          <label>Fotos <span class="muted">(mindestens eins, höchstens drei)</span></label>
+          <div class="foto-slots" id="foto-slots"></div>
+          <input type="file" id="foto-input" accept="image/*" style="display:none;" />
+          <p class="muted" style="margin-top:6px;">
+            Fotos werden vor dem Hochladen verkleinert – dein Handy muss kein
+            großes Bild verschicken.
+          </p>
+        </div>
+
+        <div class="form-field" style="margin-top:14px;">
+          <label>Was ist es?</label>
+          <select id="f-art"></select>
+        </div>
+        <div class="form-field" style="margin-top:14px;">
+          <label>Größe</label>
+          <select id="f-groesse"></select>
+        </div>
+        <div class="form-field" style="margin-top:14px;">
+          <label>Zustand</label>
+          <select id="f-zustand"></select>
+        </div>
+        <div class="form-field" style="margin-top:14px;">
+          <label>Bemerkung <span class="muted">(freiwillig)</span></label>
+          <textarea id="f-bemerkung" rows="2" placeholder="z.B. kleiner Fleck am Ärmel, sonst top"></textarea>
+        </div>
+
+        <h3 style="margin-top:22px;">Wie erreichen wir dich?</h3>
+        <p class="muted">
+          Diese Angaben stehen <strong>nie</strong> in der Börse. Sie sind nur
+          dafür da, dir eine Anfrage zustellen zu können.
+        </p>
+        <div class="form-field">
+          <label>Vorname</label>
+          <input type="text" id="f-vorname" autocomplete="given-name" />
+        </div>
+        <div class="form-field" style="margin-top:12px;">
+          <label>Nachname</label>
+          <input type="text" id="f-nachname" autocomplete="family-name" />
+        </div>
+        <div class="form-field" style="margin-top:12px;">
+          <label>E-Mail-Adresse</label>
+          <input type="email" id="f-email" autocomplete="email" />
+        </div>
+
+        <div class="card" style="background:#f7f9fc; margin-top:16px;">
+          <p class="muted" style="margin:0; font-size:13px;">
+            <strong>Datenschutz:</strong> Vorname, Nachname und E-Mail-Adresse
+            werden ausschließlich dazu verwendet, dich bei einer Anfrage zu
+            erreichen. Sie erscheinen nicht in der Börse und werden nicht
+            weitergegeben. Sie werden gelöscht, sobald das Angebot gelöscht
+            wird. Verantwortlich ist der 1. SC 1911 Heiligenstadt, Leineberg 2,
+            37308 Heilbad Heiligenstadt,
+            <a href="mailto:info@sc1911-heiligenstadt.de">info@sc1911-heiligenstadt.de</a>.
+            Auskunft, Berichtigung, Löschung und Widerspruch unter dieser
+            Anschrift.
+            <a href="https://www.sc1911-heiligenstadt.de/datenschutz/" target="_blank" rel="noopener">Datenschutzerklärung</a>
+          </p>
+        </div>
+
+        <p class="muted" id="form-error" style="display:none; color:#c0392b; margin-top:12px;"></p>
+        <div class="btn-row" style="justify-content:flex-end; margin-top:16px;">
+          <button type="button" class="btn success" id="btn-anbieten">Angebot abschicken</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- Anfrage-Dialog -->
+<div id="anfrage-overlay" class="foto-lightbox" style="display:none; cursor:default; align-items:flex-start; overflow:auto;">
+  <div class="card" style="max-width:460px; width:100%; margin:auto; cursor:default;">
+    <h2 id="anfrage-titel">Das möchte ich haben</h2>
+    <p class="muted">
+      Deine Angaben gehen direkt an die Familie, die das Teil anbietet. Der
+      Verein sieht die Anfrage mit, damit nichts liegen bleibt.
+    </p>
+    <div class="form-field">
+      <label>Vorname</label>
+      <input type="text" id="q-vorname" autocomplete="given-name" />
+    </div>
+    <div class="form-field" style="margin-top:12px;">
+      <label>Nachname</label>
+      <input type="text" id="q-nachname" autocomplete="family-name" />
+    </div>
+    <div class="form-field" style="margin-top:12px;">
+      <label>E-Mail-Adresse</label>
+      <input type="email" id="q-email" autocomplete="email" />
+    </div>
+    <div class="form-field" style="margin-top:12px;">
+      <label>Telefon <span class="muted">(freiwillig)</span></label>
+      <input type="tel" id="q-telefon" autocomplete="tel" />
+    </div>
+    <div class="form-field" style="margin-top:12px;">
+      <label>Nachricht <span class="muted">(freiwillig)</span></label>
+      <textarea id="q-nachricht" rows="2" placeholder="z.B. wann du es abholen könntest"></textarea>
+    </div>
+    <p class="muted" style="font-size:13px; margin-top:12px;">
+      <strong>Datenschutz:</strong> Deine Angaben werden ausschließlich an die
+      anbietende Familie und die Vereins-Verwaltung weitergegeben, damit die
+      Übergabe verabredet werden kann. Sie erscheinen nicht in der Börse.
+      Verantwortlich ist der 1. SC 1911 Heiligenstadt,
+      <a href="mailto:info@sc1911-heiligenstadt.de">info@sc1911-heiligenstadt.de</a>.
+      <a href="https://www.sc1911-heiligenstadt.de/datenschutz/" target="_blank" rel="noopener">Datenschutzerklärung</a>
+    </p>
+    <p class="muted" id="anfrage-error" style="display:none; color:#c0392b;"></p>
+    <div class="btn-row" style="justify-content:flex-end; margin-top:14px;">
+      <button type="button" class="btn secondary" id="btn-anfrage-abbrechen">Abbrechen</button>
+      <button type="button" class="btn success" id="btn-anfrage-senden">Anfrage senden</button>
+    </div>
+  </div>
+</div>
+
+<footer style="text-align:center; padding:20px; font-size:13px; color:#5b6472;">
+  1. SC 1911 e.V. Heilbad Heiligenstadt &middot;
+  <a href="https://www.sc1911-heiligenstadt.de/impressum-2/" target="_blank" rel="noopener">Impressum</a> &middot;
+  <a href="https://www.sc1911-heiligenstadt.de/datenschutz/" target="_blank" rel="noopener">Datenschutz</a>
+</footer>
+
+<script src="spieler.js?v=1.0"></script>
+</body>
+</html>
