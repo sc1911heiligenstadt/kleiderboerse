@@ -26,6 +26,17 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
+    version: "1.1",
+    groups: [
+      {
+        title: "Behoben",
+        items: [
+          "Am Handy standen die Reiter „Freigabe“, „Anfragen“, „Einstellungen“ und „Info“ zum Teil außerhalb des Bildschirms — die Zeile lief 30 Pixel über den rechten Rand hinaus, der letzte Reiter war nicht antippbar. Sie bricht jetzt um, alle Reiter sind erreichbar."
+        ]
+      }
+    ]
+  },
+  {
     version: "1.0",
     groups: [
       {
