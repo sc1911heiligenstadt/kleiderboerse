@@ -26,6 +26,17 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
+    version: "1.2",
+    groups: [
+      {
+        title: "Der richtige Vereinsname",
+        items: [
+          "Im Fuß der Spieler-Seite stand „1. SC 1911 e.V. Heilbad Heiligenstadt“. Der Verein heißt „1. SC 1911 Heiligenstadt e.V.“ — das steht dort jetzt so."
+        ]
+      }
+    ]
+  },
+  {
     version: "1.1",
     groups: [
       {
