@@ -307,12 +307,13 @@ async function ablehnen(id) {
   // Erst die Fotos, dann der Eintrag: bricht der Datei-Teil ab, steht das
   // Angebot noch da und der Vorgang lässt sich wiederholen. Andersherum
   // blieben verwaiste Bilder in der Nextcloud liegen, auf die nichts mehr zeigt.
-  await loescheFotos(a.fotos);
+  const uebrig = await loescheFotos(a.fotos);
   try {
     await saveWithConflictRetry((d) => {
       d.angebote = d.angebote.filter((x) => x.id !== id);
     });
     renderAlles();
+    meldeLiegengebliebeneFotos(uebrig, "Das Angebot wurde abgelehnt.");
   } catch (e) {
     alert("Ablehnen fehlgeschlagen: " + e.message);
   }
@@ -337,12 +338,13 @@ async function loeschen(id) {
   const a = appData.angebote.find((x) => x.id === id);
   if (!a) return;
   if (!confirm("Dieses Angebot mit allen Fotos und Anfragen endgültig löschen?")) return;
-  await loescheFotos(a.fotos);
+  const uebrig = await loescheFotos(a.fotos);
   try {
     await saveWithConflictRetry((d) => {
       d.angebote = d.angebote.filter((x) => x.id !== id);
     });
     renderAlles();
+    meldeLiegengebliebeneFotos(uebrig, "Das Angebot wurde gelöscht.");
   } catch (e) {
     alert("Löschen fehlgeschlagen: " + e.message);
   }
@@ -350,11 +352,26 @@ async function loeschen(id) {
 
 // Ein bereits fehlendes Foto ist kein Fehler — der Worker meldet 404 als Erfolg.
 // Ein echter Netzfehler soll den Löschvorgang trotzdem nicht aufhalten.
+//
+// Was übrig bleibt, wird aber gemeldet: bis zur Bugjagd am 2026-08-30 stand hier
+// ein leeres catch, und ein Foto, das in der Vereins-Cloud liegen blieb, war
+// danach von nirgends mehr erreichbar — das Angebot dazu gab es ja nicht mehr.
+// Rückgabe: Anzahl der Fotos, die liegen geblieben sind.
 async function loescheFotos(fotos) {
+  let liegengeblieben = 0;
   for (const f of (fotos || [])) {
-    try { await gatewayFileDelete(f.id); } catch (_) {}
+    try { await gatewayFileDelete(f.id); } catch (_) { liegengeblieben++; }
     fotoUrlCache.delete(f.id);
   }
+  return liegengeblieben;
+}
+
+// Erst melden, wenn der Eintrag wirklich weg ist — sonst stünde der Hinweis da,
+// obwohl das Angebot samt Fotos noch existiert und der Vorgang wiederholbar ist.
+function meldeLiegengebliebeneFotos(anzahl, vorgangGetan) {
+  if (!anzahl) return;
+  alert(vorgangGetan + " In der Vereins-Cloud liegen geblieben: " + anzahl
+    + (anzahl === 1 ? " Foto." : " Fotos."));
 }
 
 // ---------- Tab: Anfragen ----------

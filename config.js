@@ -26,6 +26,18 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
+    version: "1.4",
+    groups: [
+      {
+        title: "Wenn ein Foto nicht gelöscht werden kann, steht das jetzt da",
+        items: [
+          "Wird ein Angebot abgelehnt oder gelöscht, verschwinden die Fotos auch aus der Vereins-Cloud. Schlug das fehl, passierte bisher nichts Sichtbares: das Angebot war weg, die Fotos lagen aber weiter dort — und ohne Angebot kam niemand mehr an sie heran.",
+          "Jetzt erscheint ein Hinweis, wie viele Fotos liegen geblieben sind. Er kommt erst, wenn das Angebot wirklich entfernt wurde."
+        ]
+      }
+    ]
+  },
+  {
     version: "1.3",
     groups: [
       {
