@@ -26,6 +26,18 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
+    version: "1.3",
+    groups: [
+      {
+        title: "Beim Sitzungsende wird der Bildschirm geräumt",
+        items: [
+          "Lief die Anmeldung ab, während die App offen war, blieben die Angebote samt Namen im Browser stehen — unsichtbar, im Seitenquelltext aber weiter lesbar. Jetzt wird alles entfernt: die Seite, ein groß geöffnetes Foto und der eigene Name oben rechts.",
+          "Bisher blieb die App bei einer abgelaufenen Anmeldung einfach offen stehen und meldete den Fehler nur nebenbei. Jetzt führt jeder Weg auf den Anmelde-Hinweis."
+        ]
+      }
+    ]
+  },
+  {
     version: "1.2",
     groups: [
       {
