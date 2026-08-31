@@ -26,6 +26,17 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
+    version: "1.7",
+    groups: [
+      {
+        title: "Löschen und Ablehnen sind wieder rot",
+        items: [
+          "Die Knöpfe „Ablehnen“, „Löschen“ und „Link zurückziehen“ sahen aus wie ganz normale blaue Knöpfe. Jetzt sind sie rot, wie in allen anderen Vereins-Tools auch — man sieht auf einen Blick, dass da etwas weggeht."
+        ]
+      }
+    ]
+  },
+  {
     version: "1.6",
     groups: [
       {
