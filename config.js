@@ -26,6 +26,19 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
+    version: "1.5",
+    groups: [
+      {
+        title: "Vollständigere Datenschutz-Hinweise auf der Eltern-Seite",
+        items: [
+          "Beide Hinweise nennen jetzt die Beschwerdestelle (Thüringer Landesbeauftragter für den Datenschutz).",
+          "Der Hinweis beim Anfragen nennt zusätzlich die vollständige Anschrift des Vereins und sagt, wie lange die Angaben bleiben: bis das Angebot gelöscht wird. Danach sind sie mit weg — das Löschen nimmt Fotos und Anfragen mit.",
+          "An der Funktion ändert sich nichts."
+        ]
+      }
+    ]
+  },
+  {
     version: "1.4",
     groups: [
       {
