@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>👕 Kleiderbörse</title>
+<meta name="theme-color" content="#1a56a0" />
+<link rel="stylesheet" href="style.css?v=1.0" />
+</head>
+<body>
+
+<header>
+  <h1>👕 Kleiderbörse</h1>
+  <a href="https://sc1911heiligenstadt.github.io/ToolsUebersicht/" class="back-to-dashboard">← Zurück zum Dashboard</a>
+  <div class="header-right">
+    <span class="header-user" id="header-user"></span>
+    <img class="header-logo" src="https://sc1911heiligenstadt.github.io/logo.svg" alt="1. SC 1911 Heiligenstadt e.V." />
+  </div>
+</header>
+
+<!-- Verbindungs-Screen -->
+<div class="connect-screen" id="connect-screen">
+  <div class="card" id="cloud-login-section">
+    <h2>Anmeldung erforderlich</h2>
+    <p class="muted">
+      Die Kleiderbörse liegt in der Vereins-Nextcloud. Melde dich einmalig in der
+      <strong>Tools-Übersicht</strong> an – danach wird diese Seite automatisch
+      geladen, ganz ohne Zugangsdaten oder App-Passwort auf diesem Gerät.
+      Funktioniert auch mobil.
+    </p>
+    <p class="muted">
+      Eltern brauchen diese Anmeldung <strong>nicht</strong> – sie kommen über den
+      Eltern-Link direkt in die Börse.
+    </p>
+    <div class="btn-row" style="justify-content:flex-start;">
+      <a class="btn" href="https://sc1911heiligenstadt.github.io/ToolsUebersicht/">Zur Tools-Übersicht &amp; anmelden</a>
+    </div>
+    <p class="muted" id="cloud-error" style="display:none; color:#c0392b; margin-top:12px;"></p>
+  </div>
+</div>
+
+<!-- App -->
+<div id="app-shell" style="display:none;">
+  <nav>
+    <button data-tab="boerse" class="active">Börse</button>
+    <div class="nav-right">
+      <button data-tab="freigabe" id="nav-freigabe" class="editor-only" style="display:none;">Freigabe</button>
+      <button data-tab="anfragen" id="nav-anfragen" class="editor-only" style="display:none;">Anfragen</button>
+      <button data-tab="einstellungen" id="nav-einstellungen" class="admin-only" style="display:none;">Einstellungen</button>
+      <button data-tab="info">Info</button>
+    </div>
+  </nav>
+  <main>
+
+    <!-- ---------- Börse (alle, ab Sehen) ---------- -->
+    <section class="tab-section active" id="tab-boerse">
+      <div class="card">
+        <div class="card-header-row">
+          <h2>Angebotene Kleidung</h2>
+        </div>
+        <p class="muted">
+          Alles, was gerade freigegeben in der Börse steht. Wer anbietet, ist hier
+          bewusst nicht zu sehen – Kontaktdaten stehen ausschließlich im Reiter
+          „Anfragen“ und in der Verwaltung.
+        </p>
+        <div class="filter-row">
+          <div class="form-field">
+            <label>Art</label>
+            <select id="filter-art"><option value="">Alle</option></select>
+          </div>
+          <div class="form-field">
+            <label>Größe</label>
+            <select id="filter-groesse"><option value="">Alle</option></select>
+          </div>
+          <div class="form-field">
+            <label>Status</label>
+            <select id="filter-status">
+              <option value="frei" selected>In der Börse</option>
+              <option value="vergeben">Vergeben</option>
+              <option value="alle">Alle</option>
+            </select>
+          </div>
+        </div>
+        <div class="empty-state" id="boerse-empty" style="display:none;">Zurzeit steht nichts in der Börse.</div>
+        <div class="angebot-grid" id="boerse-grid"></div>
+      </div>
+
+      <div class="card">
+        <h3>Konto</h3>
+        <div class="btn-row" style="justify-content:flex-start;">
+          <a class="btn secondary small" href="https://sc1911heiligenstadt.github.io/ToolsUebersicht/">Zur Tools-Übersicht (an-/abmelden)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Freigabe (ab Bearbeiten) ---------- -->
+    <section class="tab-section" id="tab-freigabe">
+      <div class="card">
+        <div class="card-header-row">
+          <h2>Wartet auf Freigabe</h2>
+        </div>
+        <p class="muted">
+          Neu eingestellte Teile sind für niemanden sichtbar, bis sie hier
+          freigegeben werden. Beim Ablehnen werden die Fotos mitgelöscht.
+        </p>
+        <div class="empty-state" id="freigabe-empty" style="display:none;">Nichts zu prüfen.</div>
+        <div class="angebot-grid" id="freigabe-grid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header-row">
+          <h2>In der Börse</h2>
+        </div>
+        <p class="muted">
+          Freigegebene Angebote – hier als vergeben markieren oder löschen. Was
+          länger als drei Monate steht, ist als „alt“ gekennzeichnet.
+        </p>
+        <div class="empty-state" id="verwaltung-empty" style="display:none;">Keine freigegebenen Angebote.</div>
+        <div class="angebot-grid" id="verwaltung-grid"></div>
+      </div>
+    </section>
+
+    <!-- ---------- Anfragen (ab Bearbeiten) ---------- -->
+    <section class="tab-section" id="tab-anfragen">
+      <div class="card">
+        <div class="card-header-row">
+          <h2>Anfragen</h2>
+        </div>
+        <p class="muted">
+          Jede Anfrage ist bereits per E-Mail bei der anbietenden Familie
+          gelandet. Diese Liste ist der Nachlese-Ort: hier sieht man, wenn etwas
+          liegen bleibt.
+        </p>
+        <div class="empty-state" id="anfragen-empty" style="display:none;">Noch keine Anfragen.</div>
+        <div id="anfragen-rows"></div>
+      </div>
+    </section>
+
+    <!-- ---------- Einstellungen (nur Administrieren) ---------- -->
+    <section class="tab-section" id="tab-einstellungen">
+      <div class="card">
+        <h2>Eltern-Link</h2>
+        <p class="muted">
+          Dieser Link führt Eltern ohne Anmeldung in die Börse. Er enthält einen
+          geheimen Schlüssel – wer ihn hat, kommt rein. Weitergeben über die
+          Mannschafts-Gruppen oder den Elternabend, nicht öffentlich ins Netz.
+        </p>
+        <div class="link-box" id="extern-link-box">Noch kein Link erzeugt.</div>
+        <div class="btn-row" style="justify-content:flex-start; margin-top:10px;">
+          <button type="button" class="btn" id="btn-link-erzeugen">Link erzeugen</button>
+          <button type="button" class="btn secondary small" id="btn-link-kopieren">Link kopieren</button>
+          <button type="button" class="btn danger small" id="btn-link-widerrufen">Link zurückziehen</button>
+        </div>
+        <p class="muted" style="margin-top:8px;">
+          Zurückziehen macht den alten Link sofort ungültig. Ein neuer Link muss
+          danach erneut verteilt werden.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Auswahllisten</h2>
+        <p class="muted">
+          Was Eltern beim Einstellen auswählen können. Ein Eintrag, der noch bei
+          einem Angebot in Gebrauch ist, lässt sich nicht entfernen.
+        </p>
+
+        <div class="form-field" style="margin-top:12px;">
+          <label>Art des Kleidungsstücks</label>
+          <div class="btn-row" style="justify-content:flex-start;">
+            <input type="text" id="neu-art" placeholder="z.B. Torwarttrikot" style="max-width:260px;" />
+            <button type="button" class="btn secondary small" id="btn-add-art">Hinzufügen</button>
+          </div>
+          <div class="listen-chips" id="chips-arten"></div>
+        </div>
+
+        <div class="form-field" style="margin-top:16px;">
+          <label>Größen</label>
+          <div class="btn-row" style="justify-content:flex-start;">
+            <input type="text" id="neu-groesse" placeholder="z.B. 188" style="max-width:260px;" />
+            <button type="button" class="btn secondary small" id="btn-add-groesse">Hinzufügen</button>
+          </div>
+          <div class="listen-chips" id="chips-groessen"></div>
+        </div>
+
+        <div class="form-field" style="margin-top:16px;">
+          <label>Zustand</label>
+          <div class="btn-row" style="justify-content:flex-start;">
+            <input type="text" id="neu-zustand" placeholder="z.B. mit Gebrauchsspuren" style="max-width:260px;" />
+            <button type="button" class="btn secondary small" id="btn-add-zustand">Hinzufügen</button>
+          </div>
+          <div class="listen-chips" id="chips-zustaende"></div>
+        </div>
+
+        <p class="muted" id="listen-error" style="display:none; color:#c0392b; margin-top:10px;"></p>
+      </div>
+
+      <div class="card">
+        <h2>Hinweistext für Eltern</h2>
+        <p class="muted">
+          Steht oben auf der Eltern-Seite. Zum Beispiel, wo ein Teil abgeholt
+          werden kann oder wen man bei Fragen anspricht.
+        </p>
+        <div class="form-field">
+          <textarea id="f-hinweis" rows="3" placeholder="Freiwillig – leer lassen, wenn nichts nötig ist."></textarea>
+        </div>
+        <div class="btn-row" style="justify-content:flex-end;">
+          <button type="button" class="btn success" id="btn-hinweis-speichern">Hinweis speichern</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Info (immer für alle) ---------- -->
+    <section class="tab-section" id="tab-info">
+      <div class="card">
+        <h2>Über die Kleiderbörse <span class="version-badge" id="version-badge-2"></span></h2>
+        <p class="muted">
+            Vereinskleidung, aus der ein Kind herausgewachsen ist, an andere Familien weitergeben
+            – kostenlos und ohne Vereinskonto. Eltern stellen ihr Teil mit Foto, Größe und Zustand über
+            einen Link ein; weil das ohne Anmeldung geht, wartet jedes Angebot erst auf die Freigabe,
+            bevor es in der Börse erscheint. Wer etwas haben möchte, drückt einen Knopf, und die Anfrage
+            geht als E-Mail an die anbietende Familie — Namen und Kontaktdaten stehen nie in der Börse.
+            Neue Kleidung wird dagegen über die Kleiderbestellung bestellt.
+          </p>
+      </div>
+      <div class="card">
+        <h2>Änderungen</h2>
+        <div id="changelog-list"></div>
+      </div>
+
+      <div class="card" id="ds-info-karte">
+        <h2>Datenschutz</h2>
+        <p>Dieses Werkzeug gehört zu den internen Anwendungen des
+        1. SC 1911 Heiligenstadt. Die hier erfassten Daten werden
+        ausschließlich für die Vereinsarbeit verwendet und liegen auf Servern
+        in Deutschland, die ein Auftragsverarbeiter für den Verein betreibt.
+        Eine Weitergabe an Dritte findet nur statt, soweit sie für den
+        jeweiligen Zweck erforderlich oder gesetzlich vorgeschrieben ist.</p>
+        <p>Wer ein Kleidungsstück anbietet, gibt Vorname, Nachname und eine
+        E-Mail-Adresse an. Wer ein Kleidungsstück anfragt, gibt Vorname,
+        Nachname und einen Kontaktweg an. Diese Angaben werden ausschließlich
+        dazu verwendet, die Weitergabe zwischen beiden Familien zu ermöglichen;
+        sie erscheinen nie in der einsehbaren Börse. Sie werden gelöscht,
+        sobald das Angebot gelöscht wird.</p>
+        <p>Verantwortlich ist der 1. SC 1911 Heiligenstadt, Leineberg 2,
+        37308 Heilbad Heiligenstadt, Telefon 03606 612206,
+        <a href="mailto:info@sc1911-heiligenstadt.de">info@sc1911-heiligenstadt.de</a>.
+        Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
+        Datenübertragbarkeit und Widerspruch lassen sich unter dieser
+        Anschrift geltend machen. Beschwerden nimmt der Thüringer
+        Landesbeauftragte für den Datenschutz und die Informationsfreiheit
+        entgegen.</p>
+        <p><a href="https://www.sc1911-heiligenstadt.de/datenschutz/" target="_blank" rel="noopener">Datenschutzerklärung des Vereins</a>
+        &middot;
+        <a href="https://www.sc1911-heiligenstadt.de/impressum-2/" target="_blank" rel="noopener">Impressum</a></p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="config.js?v=1.0"></script>
+<script src="db.js?v=1.0"></script>
+<script src="app.js?v=1.0"></script>
+</body>
+</html>
