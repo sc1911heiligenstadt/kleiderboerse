@@ -26,88 +26,6 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
-    version: "1.7",
-    groups: [
-      {
-        title: "Löschen und Ablehnen sind wieder rot",
-        items: [
-          "Die Knöpfe „Ablehnen“, „Löschen“ und „Link zurückziehen“ sahen aus wie ganz normale blaue Knöpfe. Jetzt sind sie rot, wie in allen anderen Vereins-Tools auch — man sieht auf einen Blick, dass da etwas weggeht."
-        ]
-      }
-    ]
-  },
-  {
-    version: "1.6",
-    groups: [
-      {
-        title: "Der Reiter „Info“ erklärt jetzt, was die App wirklich tut",
-        items: [
-          "Dort stand bisher ein einzelner Satz. Jetzt steht da, wofür die einzelnen Reiter da sind, was die App mit den Eingaben macht und wo etwas anderes hingehört.",
-          "Am Funktionsumfang ändert sich nichts — nur an der Beschreibung."
-        ]
-      }
-    ]
-  },
-  {
-    version: "1.5",
-    groups: [
-      {
-        title: "Vollständigere Datenschutz-Hinweise auf der Eltern-Seite",
-        items: [
-          "Beide Hinweise nennen jetzt die Beschwerdestelle (Thüringer Landesbeauftragter für den Datenschutz).",
-          "Der Hinweis beim Anfragen nennt zusätzlich die vollständige Anschrift des Vereins und sagt, wie lange die Angaben bleiben: bis das Angebot gelöscht wird. Danach sind sie mit weg — das Löschen nimmt Fotos und Anfragen mit.",
-          "An der Funktion ändert sich nichts."
-        ]
-      }
-    ]
-  },
-  {
-    version: "1.4",
-    groups: [
-      {
-        title: "Wenn ein Foto nicht gelöscht werden kann, steht das jetzt da",
-        items: [
-          "Wird ein Angebot abgelehnt oder gelöscht, verschwinden die Fotos auch aus der Vereins-Cloud. Schlug das fehl, passierte bisher nichts Sichtbares: das Angebot war weg, die Fotos lagen aber weiter dort — und ohne Angebot kam niemand mehr an sie heran.",
-          "Jetzt erscheint ein Hinweis, wie viele Fotos liegen geblieben sind. Er kommt erst, wenn das Angebot wirklich entfernt wurde."
-        ]
-      }
-    ]
-  },
-  {
-    version: "1.3",
-    groups: [
-      {
-        title: "Beim Sitzungsende wird der Bildschirm geräumt",
-        items: [
-          "Lief die Anmeldung ab, während die App offen war, blieben die Angebote samt Namen im Browser stehen — unsichtbar, im Seitenquelltext aber weiter lesbar. Jetzt wird alles entfernt: die Seite, ein groß geöffnetes Foto und der eigene Name oben rechts.",
-          "Bisher blieb die App bei einer abgelaufenen Anmeldung einfach offen stehen und meldete den Fehler nur nebenbei. Jetzt führt jeder Weg auf den Anmelde-Hinweis."
-        ]
-      }
-    ]
-  },
-  {
-    version: "1.2",
-    groups: [
-      {
-        title: "Der richtige Vereinsname",
-        items: [
-          "Im Fuß der Spieler-Seite stand „1. SC 1911 e.V. Heilbad Heiligenstadt“. Der Verein heißt „1. SC 1911 Heiligenstadt e.V.“ — das steht dort jetzt so."
-        ]
-      }
-    ]
-  },
-  {
-    version: "1.1",
-    groups: [
-      {
-        title: "Behoben",
-        items: [
-          "Am Handy standen die Reiter „Freigabe“, „Anfragen“, „Einstellungen“ und „Info“ zum Teil außerhalb des Bildschirms — die Zeile lief 30 Pixel über den rechten Rand hinaus, der letzte Reiter war nicht antippbar. Sie bricht jetzt um, alle Reiter sind erreichbar."
-        ]
-      }
-    ]
-  },
-  {
     version: "1.0",
     groups: [
       {
@@ -115,16 +33,18 @@ const APP_CHANGELOG = [
         items: [
           "Eltern geben Vereinskleidung, aus der ihr Kind herausgewachsen ist, an andere Familien weiter — kostenlos.",
           "Alles läuft über einen Link. Wer etwas anbieten oder etwas suchen will, braucht kein Vereinskonto und kein Passwort.",
-          "Verkauft wird hier nichts. Es gibt kein Preisfeld — jedes Teil wird verschenkt."
+          "Verkauft wird hier nichts. Es gibt kein Preisfeld — jedes Teil wird verschenkt.",
+          "Nicht zu verwechseln mit der Kleiderbestellung: dort wird neue Vereinskleidung beim Lieferanten bestellt, hier wandert gebrauchte von Familie zu Familie."
         ]
       },
       {
         title: "Ein Teil anbieten",
         items: [
           "Zu jedem Teil gehören ein bis drei Fotos, die Art des Kleidungsstücks, die Größe und der Zustand. Eine Bemerkung ist freiwillig.",
-          "Art, Größe und Zustand kommen aus festen Listen, damit sich die Börse später filtern lässt. Frei getippte Schreibweisen fänden sonst nie zusammen.",
+          "Art, Größe und Zustand kommen aus festen Listen, damit sich die Börse filtern lässt. Frei getippte Schreibweisen fänden sonst nie zusammen.",
           "Die Fotos werden schon im Browser auf eine handliche Größe gerechnet, bevor sie hochgeladen werden — ein Handy-Foto muss dafür nicht in voller Auflösung durchs Netz.",
-          "Angeben muss man Vorname, Nachname und E-Mail-Adresse. Diese Angaben stehen nie in der Börse; sie dienen nur dazu, eine Anfrage zustellen zu können."
+          "Angeben muss man Vorname, Nachname und E-Mail-Adresse. Diese Angaben stehen nie in der Börse; sie dienen nur dazu, eine Anfrage zustellen zu können.",
+          "Über der Eingabe steht ein Hinweistext, den der Verein in den Einstellungen pflegt."
         ]
       },
       {
@@ -136,10 +56,17 @@ const APP_CHANGELOG = [
         ]
       },
       {
-        title: "Anfragen",
+        title: "Was in der Börse steht",
         items: [
           "In der Börse steht zu jedem Teil nur Foto, Art, Größe, Zustand und Bemerkung. Weder Name noch Kontakt der anbietenden Familie ist zu sehen.",
-          "Wer ein Teil haben möchte, hinterlässt seinen Namen und wie er erreichbar ist. Die Anfrage geht als E-Mail direkt an die anbietende Familie.",
+          "Die Liste lässt sich nach Art, Größe und Status filtern — von sich aus stehen dort die Stücke, die gerade zu haben sind; vergebene lassen sich dazuschalten.",
+          "Dieselbe Übersicht sehen die Eltern über ihren Link, ohne Anmeldung."
+        ]
+      },
+      {
+        title: "Anfragen",
+        items: [
+          "Wer ein Teil haben möchte, hinterlässt Vorname, Nachname und E-Mail-Adresse; Telefonnummer und eine Nachricht sind freiwillig. Die Anfrage geht als E-Mail direkt an die anbietende Familie.",
           "Jede Anfrage steht zusätzlich im Reiter „Anfragen“, damit ein Bearbeiter nachfassen kann, wenn nichts passiert.",
           "Die Kontaktdaten des Anfragenden bekommt nur die anbietende Familie und die Vereins-Verwaltung zu sehen — nie die Börse."
         ]
@@ -150,6 +77,7 @@ const APP_CHANGELOG = [
           "Jedes Angebot hat einen eigenen geheimen Link. Er steht in jeder E-Mail an die anbietende Familie.",
           "Ein Klick darauf nimmt das Teil aus der Börse — ohne Anmeldung, ohne Umweg über den Verein.",
           "Ein Bearbeiter kann jedes Angebot ebenfalls jederzeit als vergeben markieren oder ganz löschen.",
+          "Beim Ablehnen und beim Löschen gehen die Fotos aus der Vereins-Cloud mit. Bleibt dabei eines liegen, sagt die App ausdrücklich, wie viele es sind — sonst wäre das Angebot weg und niemand käme mehr an die Bilder heran.",
           "Angebote, die länger als drei Monate stehen, werden in der Verwaltung als alt gekennzeichnet. Gelöscht wird nichts von allein."
         ]
       },
@@ -158,16 +86,25 @@ const APP_CHANGELOG = [
         items: [
           "Sehen: die freigegebenen Angebote und die Reiter Börse und Info. Kontaktdaten sind auch auf dieser Stufe nicht sichtbar.",
           "Bearbeiten: freigeben, ablehnen, als vergeben markieren, löschen und die Anfragen einsehen.",
-          "Administrieren: die Auswahllisten pflegen und den Eltern-Link erzeugen oder zurückziehen.",
+          "Administrieren: die Auswahllisten und den Hinweistext pflegen und den Eltern-Link erzeugen oder zurückziehen.",
           "Der Reiter „Info“ ist für alle sichtbar."
         ]
       },
       {
-        title: "Daten & Speicherung",
+        title: "Daten und Speicherung",
         items: [
           "Gespeichert wird in der Vereins-Nextcloud über die zentrale Anmeldung der Tools-Übersicht — ein eigenes Passwort braucht es nicht.",
           "Die Fotos liegen als einzelne Bilddateien daneben, nicht in der Datenliste selbst.",
-          "Der Eltern-Link enthält einen geheimen Schlüssel. Er lässt sich in den Einstellungen zurückziehen; danach führt der alte Link ins Leere."
+          "Der Eltern-Link enthält einen geheimen Schlüssel. Er lässt sich in den Einstellungen zurückziehen; danach führt der alte Link ins Leere.",
+          "Beide Formulare auf der Eltern-Seite tragen ihre eigene Datenschutz-Information: wer verantwortlich ist — mit vollständiger Anschrift —, wie lange die Angaben bleiben und wo man sich beschweren kann. Die Angaben zu einem Angebot bleiben, bis das Angebot gelöscht wird; danach sind sie mit weg, denn das Löschen nimmt Fotos und Anfragen mit.",
+          "Endet die Anmeldung, während die Verwaltungsseite offen ist, wird der Bildschirm geräumt: Angebote, ein groß geöffnetes Foto und der eigene Name oben rechts verschwinden, und jeder Weg führt auf den Anmelde-Hinweis."
+        ]
+      },
+      {
+        title: "Bedienung am Handy",
+        items: [
+          "Die Reiterleiste bricht am Handy um, statt seitlich aus dem Bild zu laufen — auch die hinteren Reiter sind auf schmalen Bildschirmen erreichbar.",
+          "Knöpfe, die etwas wegnehmen — „Ablehnen“, „Löschen“ und „Link zurückziehen“ — sind rot, wie in allen anderen Vereins-Tools auch."
         ]
       }
     ]

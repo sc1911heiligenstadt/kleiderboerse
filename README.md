@@ -13,21 +13,28 @@ frei, was in die Börse darf, und vermittelt die Anfragen.
 **Die Eltern-Seite** (`spieler.html`) braucht **keinen Login**. Über den
 Eltern-Link kommt man direkt hinein und kann dort
 
-- **ein Kleidungsstück anbieten** — was es ist, Art, Größe, Zustand, Fotos und
-  eine Bemerkung, dazu Vorname, Nachname und eine Kontaktmöglichkeit
-  (E-Mail-Adresse oder Telefon);
-- **sehen, was gerade da ist**, und danach fragen;
+- **ein Kleidungsstück anbieten** — Art, Größe, Zustand, ein bis drei Fotos und
+  eine Bemerkung, dazu Vorname, Nachname und E-Mail-Adresse. Diese Angaben
+  stehen nie in der Börse; sie dienen nur der Zustellung einer Anfrage;
+- **sehen, was gerade da ist** — filterbar nach Art, Größe und Status — und
+  danach fragen (Vorname, Nachname, E-Mail; Telefon und Nachricht freiwillig);
 - melden, dass ein Stück **weg ist** und aus der Börse verschwinden kann.
+
+Die Fotos werden schon im Browser verkleinert, bevor sie hochgeladen werden.
 
 **Die Verwaltungsseite** (`index.html`) läuft über den normalen Zugang des
 Vereins:
 
 | Reiter | Wofür |
 |---|---|
-| **Börse** | Was gerade in der Börse steht |
-| **Freigabe** | Was von Eltern angeboten wurde und **auf Freigabe wartet** |
-| **Anfragen** | Wer nach welchem Stück gefragt hat |
+| **Börse** | Was gerade in der Börse steht, filterbar nach Art, Größe und Status — bewusst **ohne** Anbieternamen |
+| **Freigabe** | Was von Eltern angeboten wurde und **auf Freigabe wartet**; hier wird freigegeben, abgelehnt, als vergeben markiert und gelöscht |
+| **Anfragen** | Wer nach welchem Stück gefragt hat, mit Kontaktdaten zum Nachfassen |
 | **Einstellungen** | Auswahllisten (Art, Größen, Zustand), der Hinweistext für Eltern und der Eltern-Link |
+| **Info** | Was die App kann, die Änderungen und der Datenschutzhinweis — für alle sichtbar |
+
+Angebote, die länger als drei Monate stehen, werden in der Verwaltung als **alt**
+gekennzeichnet. Gelöscht wird nichts von allein.
 
 ## Warum die Freigabe dazwischen liegt
 
@@ -47,10 +54,15 @@ bestellt — anderes Werkzeug, anderer Zweck.
 Die Eltern-Seite ist **ohne Anmeldung** erreichbar. Für die Verwaltungsseite
 läuft die Anmeldung über die [Tools-Übersicht](https://sc1911heiligenstadt.github.io/ToolsUebersicht/).
 
-Die Rechte gelten in drei Stufen: **Sehen** (Börse und Anfragen ansehen),
-**Bearbeiten** (Angebote freigeben, Anfragen bearbeiten) und **Administrieren**
-(Reiter *Einstellungen*: Auswahllisten, Hinweistext, Eltern-Link). Wer welche
-Stufe hat, legt die Tools-Übersicht fest.
+Die Rechte gelten in drei Stufen: **Sehen** (Reiter *Börse* und *Info* — ohne
+Kontaktdaten), **Bearbeiten** (zusätzlich *Freigabe* und *Anfragen*: freigeben,
+ablehnen, als vergeben markieren, löschen und Kontaktdaten einsehen) und
+**Administrieren** (zusätzlich *Einstellungen*: Auswahllisten, Hinweistext,
+Eltern-Link erzeugen und zurückziehen). Wer welche Stufe hat, legt die
+Tools-Übersicht fest.
+
+Ein gelöschtes oder abgelehntes Angebot nimmt seine Fotos und Anfragen mit. Bleibt
+dabei ein Foto liegen, sagt die App ausdrücklich, wie viele.
 
 ## Lokal starten
 
