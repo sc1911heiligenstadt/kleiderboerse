@@ -26,6 +26,19 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
+    version: "1.1",
+    groups: [
+      {
+        title: "Ein vergebenes Stück kommt wieder zurück",
+        items: [
+          "Bei einem Angebot, das auf „vergeben“ steht, gibt es jetzt den Knopf „Wieder in die Börse“.",
+          "Vorher ging das nicht. War ein Stück einmal als vergeben markiert, blieb nur noch Löschen — und das nimmt die Fotos und die Anfragen mit. Die Familie musste alles neu einstellen und neu freigeben lassen.",
+          "Das trifft öfter, als man denkt: der „ist weg“-Link steht in jeder Anfrage-Mail. Ein Fehlklick dort, oder eine Übergabe, die doch nicht klappt, und das Stück war aus der Börse raus."
+        ]
+      }
+    ]
+  },
+  {
     version: "1.0",
     groups: [
       {

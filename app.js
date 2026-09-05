@@ -278,7 +278,9 @@ function renderFreigabe() {
     .sort((x, y) => String(y.freigegebenAm || "").localeCompare(String(x.freigegebenAm || "")));
   vleer.style.display = drin.length ? "none" : "block";
   vgrid.innerHTML = drin.map((a) => angebotKarteHtml(a,
-    (a.status === "frei" ? '<button type="button" class="btn secondary small btn-vergeben">Als vergeben markieren</button>' : "") +
+    (a.status === "frei"
+      ? '<button type="button" class="btn secondary small btn-vergeben">Als vergeben markieren</button>'
+      : '<button type="button" class="btn success small btn-zurueck">Wieder in die Börse</button>') +
     '<button type="button" class="btn danger small btn-loeschen">Löschen</button>', true)).join("");
   ladeFotosNach(vgrid);
 }
@@ -329,6 +331,35 @@ async function alsVergeben(id) {
       t.vergebenVon = currentUsername;
     });
     renderAlles();
+  } catch (e) {
+    alert("Speichern fehlgeschlagen: " + e.message);
+  }
+}
+
+// Der Rückweg aus "vergeben". Eine Übergabe platzt, jemand klickt in der Mail
+// versehentlich auf "ist weg" — ohne diesen Knopf bliebe nur Löschen, und das
+// nimmt Fotos und Anfragen mit; die Familie müsste alles neu einstellen.
+async function zurueckInDieBoerse(id) {
+  const a = appData.angebote.find((x) => x.id === id);
+  if (!a || a.status !== "vergeben") return;
+  if (!confirm("Dieses Angebot wieder in die Börse stellen? Es ist danach wieder für alle Familien sichtbar.")) return;
+  let gemacht = false;
+  try {
+    await saveWithConflictRetry((d) => {
+      gemacht = false;
+      const t = d.angebote.find((x) => x.id === id);
+      if (!t || t.status !== "vergeben") return;
+      t.status = "frei";
+      // freigegebenAm bleibt stehen — daran hängt die Sortierung und die
+      // Anzeige "steht schon lange in der Börse".
+      delete t.vergebenAm;
+      delete t.vergebenVon;
+      gemacht = true;
+    });
+    renderAlles();
+    if (!gemacht) {
+      alert("Das Angebot steht nicht mehr auf „vergeben“ — jemand anderes war schneller. Die Liste zeigt jetzt den aktuellen Stand.");
+    }
   } catch (e) {
     alert("Speichern fehlgeschlagen: " + e.message);
   }
@@ -678,6 +709,7 @@ async function init() {
     const karte = e.target.closest(".angebot-karte");
     if (!karte) return;
     if (e.target.closest(".btn-vergeben")) alsVergeben(karte.dataset.id);
+    else if (e.target.closest(".btn-zurueck")) zurueckInDieBoerse(karte.dataset.id);
     else if (e.target.closest(".btn-loeschen")) loeschen(karte.dataset.id);
   });
 
