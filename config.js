@@ -26,6 +26,18 @@ const DEFAULT_ZUSTAENDE = ["neuwertig", "gut erhalten", "gebraucht"];
 
 const APP_CHANGELOG = [
   {
+    version: "1.2",
+    groups: [
+      {
+        title: "Der „ist weg“-Link endet nicht mehr im Nichts",
+        items: [
+          "Wer in der Anfrage-Mail auf „ist weg“ klickt und dort antwortet, bekommt jetzt einen Satz zum Abschluss und kann das Fenster zumachen.",
+          "Vorher zeigten beide Knöpfe auf dieselbe Seite ohne Link-Schlüssel. Die Familie las dann: „Dieser Link ist unvollständig oder nicht mehr gültig“ — obwohl sie alles richtig gemacht hatte. Das traf ausgerechnet den Erfolgsweg."
+        ]
+      }
+    ]
+  },
+  {
     version: "1.1",
     groups: [
       {

@@ -382,7 +382,20 @@ function zeigeAnsicht(welche) {
 async function wegModus(wegToken) {
   el("sec-laedt").style.display = "none";
   el("sec-weg").style.display = "block";
-  el("btn-weg-abbrechen").href = externBasisOhneParameter();
+
+  // Diese Seite kennt nur den ?weg=-Schlüssel, nicht den Börsen-Schlüssel ?t=.
+  // Ein Link zurück würde deshalb auf spieler.html OHNE Parameter zeigen — und
+  // dort meldet init() "Dieser Link ist unvollständig oder nicht mehr gültig".
+  // Also gar nicht navigieren, sondern den Abschnitt mit einem Satz schließen.
+  function abschliessen(satz) {
+    el("weg-status").textContent = satz + " Du kannst dieses Fenster jetzt schließen.";
+    el("btn-weg-bestaetigen").style.display = "none";
+    el("btn-weg-abbrechen").style.display = "none";
+  }
+
+  el("btn-weg-abbrechen").addEventListener("click", () => {
+    abschliessen("Alles klar — das Angebot bleibt in der Börse.");
+  });
 
   el("btn-weg-bestaetigen").addEventListener("click", async () => {
     const btn = el("btn-weg-bestaetigen");
@@ -390,9 +403,7 @@ async function wegModus(wegToken) {
     btn.textContent = "Einen Moment …";
     try {
       await externRequest({ action: "kbo-extern-weg", wegToken });
-      el("weg-status").textContent = "Erledigt – das Kleidungsstück steht nicht mehr in der Börse. Danke!";
-      btn.style.display = "none";
-      el("btn-weg-abbrechen").textContent = "Schließen";
+      abschliessen("Erledigt – das Kleidungsstück steht nicht mehr in der Börse. Danke!");
     } catch (e) {
       el("weg-status").textContent = e.message;
       btn.disabled = false;
@@ -406,18 +417,14 @@ async function wegModus(wegToken) {
       ? "Es geht um: " + body.beschreibung
       : "Dieses Angebot wird aus der Börse genommen.";
     if (body.schonWeg) {
-      el("weg-status").textContent = "Dieses Kleidungsstück steht bereits nicht mehr in der Börse.";
-      el("btn-weg-bestaetigen").style.display = "none";
+      abschliessen("Dieses Kleidungsstück steht bereits nicht mehr in der Börse.");
     }
   } catch (e) {
     el("weg-info").textContent = "";
     el("weg-status").textContent = e.message;
     el("btn-weg-bestaetigen").style.display = "none";
+    el("btn-weg-abbrechen").style.display = "none";
   }
-}
-
-function externBasisOhneParameter() {
-  return location.href.replace(/[?#].*$/, "");
 }
 
 // ---------- Start ----------
