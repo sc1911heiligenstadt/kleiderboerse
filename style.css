@@ -380,3 +380,7 @@ nav .nav-right { margin-left: auto; display: flex; flex-wrap: wrap; gap: inherit
   padding: 10px; font-family: monospace; font-size: 13px;
   overflow-wrap: anywhere; margin-top: 8px;
 }
+
+/* Karte „Funktionen“ im Info-Reiter. Die Schriftgroesse haengt sonst an
+   .changelog-entry — diese Klasse hat die Funktionen-Karte nicht. */
+#funktionen-list { display: flex; flex-direction: column; gap: 18px; font-size: 13px; }
